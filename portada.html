@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Análisis y Modelamiento de Comportamiento</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1.5rem, 5vw, 3rem);
+      font-family: "Source Sans 3", system-ui, sans-serif;
+      font-weight: 400;
+      color: #2c2925;
+      background-color: #f7f4ef;
+      background-image:
+        radial-gradient(ellipse 140% 90% at 50% -20%, rgba(201, 169, 120, 0.09), transparent 50%),
+        radial-gradient(ellipse 80% 50% at 100% 100%, rgba(139, 115, 85, 0.06), transparent 45%),
+        radial-gradient(ellipse 70% 40% at 0% 100%, rgba(92, 83, 74, 0.05), transparent 40%),
+        linear-gradient(180deg, #faf8f5 0%, #f3efe8 100%);
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 36rem;
+      text-align: center;
+      animation: reveal 1.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .card {
+      position: relative;
+      padding: clamp(2.5rem, 7vw, 3.5rem) clamp(2rem, 5vw, 3rem);
+      border-radius: 2px;
+      background: linear-gradient(165deg, rgba(255, 255, 255, 0.94) 0%, rgba(252, 250, 246, 0.98) 100%);
+      border: 1px solid rgba(201, 192, 181, 0.65);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.8) inset,
+        0 32px 64px -24px rgba(62, 53, 44, 0.14),
+        0 8px 24px -12px rgba(62, 53, 44, 0.08);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(201, 169, 120, 0.18);
+      border-radius: 1px;
+      pointer-events: none;
+    }
+
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.85rem;
+    }
+
+    .ornament-line {
+      flex: 1;
+      max-width: 4.5rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(160, 145, 125, 0.45), transparent);
+    }
+
+    .ornament-mark {
+      width: 5px;
+      height: 5px;
+      border: 1px solid rgba(139, 115, 85, 0.4);
+      transform: rotate(45deg);
+      opacity: 0.85;
+    }
+
+    h1 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(1.85rem, 5vw, 2.65rem);
+      font-weight: 600;
+      line-height: 1.22;
+      letter-spacing: 0.01em;
+      color: #1c1917;
+      font-feature-settings: "kern" 1, "liga" 1;
+      margin-bottom: 1.1rem;
+    }
+
+    .subtitle {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #78716c;
+      margin-bottom: 2.25rem;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 0 auto 2rem;
+      max-width: 12rem;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(180, 165, 145, 0.55), transparent);
+    }
+
+    .divider i {
+      display: block;
+      width: 4px;
+      height: 4px;
+      background: rgba(139, 115, 85, 0.45);
+      transform: rotate(45deg);
+    }
+
+    .meta {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .name {
+      font-size: 1.0625rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #44403c;
+    }
+
+    .code {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #57534e;
+      padding: 0.55rem 1.15rem;
+      border-radius: 1px;
+      background: rgba(245, 241, 234, 0.85);
+      border: 1px solid rgba(214, 206, 194, 0.9);
+      box-shadow: 0 1px 2px rgba(62, 53, 44, 0.05);
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .wrap {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="card">
+      <div class="ornament" aria-hidden="true">
+        <span class="ornament-line"></span>
+        <span class="ornament-mark"></span>
+        <span class="ornament-line"></span>
+      </div>
+      <h1>Análisis y Modelamiento de Comportamiento</h1>
+      <p class="subtitle">SW503-U</p>
+      <div class="divider" aria-hidden="true"><i></i></div>
+      <div class="meta">
+        <p class="name">Gabriel Chupa Ballesteros</p>
+        <p class="code">20240160G</p>
+      </div>
+    </header>
+  </div>
+</body>
+</html>
