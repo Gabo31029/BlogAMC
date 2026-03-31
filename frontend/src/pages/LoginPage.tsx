@@ -45,7 +45,7 @@ export default function LoginPage() {
           <div>
             <label className="text-sm text-zinc-700">Usuario</label>
             <input
-              className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 outline-none focus:ring-2 focus:ring-zinc-300"
+              className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-zinc-900 caret-zinc-900 placeholder:text-zinc-400 outline-none focus:ring-2 focus:ring-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-50 dark:caret-zinc-50 dark:placeholder:text-zinc-500"
               defaultValue="admin"
               name="username"
             />
@@ -55,7 +55,7 @@ export default function LoginPage() {
             <label className="text-sm text-zinc-700">Contraseña</label>
             <input
               type="password"
-              className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 outline-none focus:ring-2 focus:ring-zinc-300"
+              className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-zinc-900 caret-zinc-900 placeholder:text-zinc-400 outline-none focus:ring-2 focus:ring-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-50 dark:caret-zinc-50 dark:placeholder:text-zinc-500"
               defaultValue="password"
               name="password"
             />
