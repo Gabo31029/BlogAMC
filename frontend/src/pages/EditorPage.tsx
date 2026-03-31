@@ -183,17 +183,19 @@ export default function EditorPage() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Título del post..."
-              className="w-full bg-transparent text-5xl font-bold tracking-tight outline-none placeholder:text-zinc-400"
+              className="w-full bg-transparent text-5xl font-bold tracking-tight text-zinc-900 outline-none placeholder:text-zinc-400 dark:text-zinc-50 dark:placeholder:text-zinc-500"
             />
 
             <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
-              <span className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-zinc-700">
+              <span className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200">
                 {uploading ? 'Subiendo imagen...' : saveState === 'saving' ? 'Guardando...' : saveState === 'saved' ? 'Guardado' : saveState === 'error' ? 'Error al guardar' : 'Listo'}
               </span>
               {published ? (
                 <span className="rounded-full bg-zinc-900 px-3 py-1 text-white">Publicado</span>
               ) : (
-                <span className="rounded-full bg-zinc-100 px-3 py-1 text-zinc-800">Borrador</span>
+                <span className="rounded-full bg-zinc-100 px-3 py-1 text-zinc-800 dark:bg-zinc-900 dark:text-zinc-100">
+                  Borrador
+                </span>
               )}
             </div>
             {saveError ? (
@@ -213,7 +215,7 @@ export default function EditorPage() {
             </button>
             <button
               onClick={onDelete}
-              className="w-40 rounded-xl border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-800 shadow-sm transition hover:bg-zinc-50 disabled:opacity-50"
+              className="w-40 rounded-xl border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-800 shadow-sm transition hover:bg-zinc-50 disabled:opacity-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900"
               disabled={!postId}
             >
               Eliminar
@@ -224,7 +226,7 @@ export default function EditorPage() {
 
       <main className="mx-auto max-w-6xl px-6 pb-12">
         <div className="grid gap-6 lg:grid-cols-2">
-          <section className="rounded-2xl border border-zinc-200 bg-white shadow-sm p-5">
+          <section className="rounded-2xl border border-zinc-200 bg-white shadow-sm p-5 dark:border-zinc-800 dark:bg-zinc-950">
             <NotionEditor
               valueJson={contentJson}
               onUploadingChange={setUploading}
@@ -233,15 +235,17 @@ export default function EditorPage() {
             />
           </section>
 
-          <section className="rounded-2xl border border-zinc-200 bg-white shadow-sm p-5">
+          <section className="rounded-2xl border border-zinc-200 bg-white shadow-sm p-5 dark:border-zinc-800 dark:bg-zinc-950">
             <div className="flex items-center justify-between gap-4">
-              <p className="text-sm font-medium text-zinc-700">Vista previa</p>
+              <p className="text-sm font-medium text-zinc-700 dark:text-zinc-200">Vista previa</p>
             </div>
-            <div className="mt-3 notion-prose overflow-auto rounded-xl border border-zinc-100 bg-zinc-50 p-4 h-[540px]">
+            <div className="mt-3 notion-prose overflow-auto rounded-xl border border-zinc-100 bg-zinc-50 p-4 h-[540px] text-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-50">
               {contentHtml ? (
                 <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
               ) : (
-                <p className="text-sm text-zinc-600">Empieza a escribir para ver la vista previa.</p>
+                <p className="text-sm text-zinc-600 dark:text-zinc-300">
+                  Empieza a escribir para ver la vista previa.
+                </p>
               )}
             </div>
           </section>
