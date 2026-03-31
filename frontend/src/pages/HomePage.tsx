@@ -39,6 +39,20 @@ linear-gradient(180deg, ${bg.from}${via}, ${bg.to})`
 }
 
 function Hero({ s }: { s: HeroSection }) {
+  const profile = useMemo(() => {
+    const env = import.meta.env as any
+    const name = String(env.VITE_PROFILE_NAME ?? '').trim()
+    const program = String(env.VITE_PROFILE_PROGRAM ?? '').trim()
+    const university = String(env.VITE_PROFILE_UNIVERSITY ?? '').trim()
+    const email = String(env.VITE_PROFILE_EMAIL ?? '').trim()
+    return { name, program, university, email }
+  }, [])
+
+  const profileLine = useMemo(() => {
+    const bits = [profile.name, profile.program, profile.university].filter(Boolean)
+    return bits.join(' — ')
+  }, [profile.name, profile.program, profile.university])
+
   return (
     <Section id={s.id} bg={s.bg}>
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/10 to-transparent" />
@@ -46,6 +60,17 @@ function Hero({ s }: { s: HeroSection }) {
       <div className="mx-auto max-w-6xl px-6 pt-28 pb-12 min-h-[100svh] flex flex-col">
         <div className="flex-1 grid place-items-center text-center">
           <div className="max-w-2xl">
+            {s.id === 'intro' && (profileLine || profile.email) ? (
+              <div className="mb-4 text-xs font-medium tracking-[0.22em] text-zinc-700">
+                {profileLine}
+                {profileLine && profile.email ? ' · ' : ''}
+                {profile.email ? (
+                  <a className="underline underline-offset-4" href={`mailto:${profile.email}`}>
+                    {profile.email}
+                  </a>
+                ) : null}
+              </div>
+            ) : null}
             <h1 className="text-4xl sm:text-6xl font-semibold tracking-tight text-zinc-900">
               {s.title}
             </h1>
