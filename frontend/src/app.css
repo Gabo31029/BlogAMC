@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos globales minimalistas para la app. */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-zinc-50 text-zinc-900 antialiased;
+}
+
+/* Landing-like scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply bg-zinc-950 text-zinc-50;
+  }
+}
+
+/* Estilo “tipo Notion” para el contenido renderizado en preview. */
+.notion-prose {
+  color: inherit;
+}
+
+.notion-prose h1 {
+  @apply text-4xl font-semibold tracking-tight;
+}
+
+.notion-prose h2 {
+  @apply text-2xl font-semibold tracking-tight mt-6 mb-3;
+}
+
+.notion-prose p {
+  @apply leading-7 my-2;
+}
+
+.notion-prose img {
+  @apply rounded-md shadow-sm;
+}
+
