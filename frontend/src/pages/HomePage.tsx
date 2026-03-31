@@ -41,52 +41,87 @@ linear-gradient(180deg, ${bg.from}${via}, ${bg.to})`
 function Hero({ s }: { s: HeroSection }) {
   const profile = useMemo(() => {
     const env = import.meta.env as any
-    const name = String(env.VITE_PROFILE_NAME ?? '').trim()
-    const program = String(env.VITE_PROFILE_PROGRAM ?? '').trim()
-    const university = String(env.VITE_PROFILE_UNIVERSITY ?? '').trim()
-    const email = String(env.VITE_PROFILE_EMAIL ?? '').trim()
-    return { name, program, university, email }
+    const courseTitle = String(env.VITE_COURSE_TITLE ?? 'Análisis y Modelamiento de Comportamiento').trim()
+    const courseCode = String(env.VITE_COURSE_CODE ?? 'SW503-U').trim()
+    const name = String(env.VITE_PROFILE_NAME ?? 'Gabriel Chupa Ballesteros').trim()
+    const studentCode = String(env.VITE_PROFILE_STUDENT_CODE ?? '20240160G').trim()
+    const program = String(env.VITE_PROFILE_PROGRAM ?? 'Tu carrera / programa').trim()
+    const university = String(env.VITE_PROFILE_UNIVERSITY ?? 'Tu universidad').trim()
+    const email = String(env.VITE_PROFILE_EMAIL ?? 'tu@email.com').trim()
+    const professor = String(env.VITE_PROFILE_PROFESSOR ?? '').trim()
+    return { courseTitle, courseCode, name, studentCode, program, university, email, professor }
   }, [])
-
-  const profileLine = useMemo(() => {
-    const bits = [profile.name, profile.program, profile.university].filter(Boolean)
-    return bits.join(' — ')
-  }, [profile.name, profile.program, profile.university])
 
   return (
     <Section id={s.id} bg={s.bg}>
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/10 to-transparent" />
 
-      <div className="mx-auto max-w-6xl px-6 pt-28 pb-12 min-h-[100svh] flex flex-col">
+      <div className="mx-auto max-w-6xl px-6 pt-32 pb-16 min-h-[100svh] flex flex-col">
         <div className="flex-1 grid place-items-center text-center">
-          <div className="max-w-2xl">
-            {s.id === 'intro' && (profileLine || profile.email) ? (
-              <div className="mb-4 text-xs font-medium tracking-[0.22em] text-zinc-700">
-                {profileLine}
-                {profileLine && profile.email ? ' · ' : ''}
-                {profile.email ? (
-                  <a className="underline underline-offset-4" href={`mailto:${profile.email}`}>
-                    {profile.email}
-                  </a>
-                ) : null}
-              </div>
-            ) : null}
-            <h1 className="text-4xl sm:text-6xl font-semibold tracking-tight text-zinc-900">
-              {s.title}
-            </h1>
-            <p className="mt-3 text-base sm:text-lg text-zinc-700">{s.subtitle}</p>
+          <div className="mx-auto w-full max-w-3xl">
+            {s.id === 'intro' ? (
+              <div className="-mt-6">
+                <div className="text-[11px] font-semibold tracking-[0.38em] text-zinc-600 uppercase">
+                  {profile.courseCode}
+                </div>
+                <div className="mt-2 text-lg sm:text-2xl font-semibold tracking-tight text-zinc-900">
+                  {profile.courseTitle}
+                </div>
 
-            <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <div className="mt-6 flex items-center justify-center">
+                  <div className="h-px w-24 bg-zinc-200" />
+                </div>
+
+                <div className="mt-6 space-y-2 text-sm sm:text-[15px] text-zinc-700">
+                  <div className="text-[11px] font-semibold tracking-[0.34em] text-zinc-500 uppercase">
+                    Alumno
+                  </div>
+
+                  <div className="text-base sm:text-lg font-semibold text-zinc-900">
+                    {profile.name}{' '}
+                    <span className="text-zinc-500 font-medium">· {profile.studentCode}</span>
+                  </div>
+
+                  {profile.professor ? (
+                    <div>
+                      <span className="font-semibold text-zinc-900">Profesor</span>
+                      <span className="text-zinc-400"> · </span>
+                      {profile.professor}
+                    </div>
+                  ) : null}
+
+                  <div>{[profile.program, profile.university].filter(Boolean).join(' — ')}</div>
+
+                  <div className="pt-2">
+                    <a
+                      className="text-zinc-700 underline underline-offset-4 hover:text-zinc-900"
+                      href={`mailto:${profile.email}`}
+                    >
+                      {profile.email}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="-mt-10">
+                <h1 className="text-5xl sm:text-7xl font-semibold tracking-tight text-zinc-900">
+                  {s.title}
+                </h1>
+                <p className="mt-4 text-base sm:text-lg text-zinc-700">{s.subtitle}</p>
+              </div>
+            )}
+
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 to={s.ctaPrimary.to}
-                className="w-full sm:w-auto rounded-full bg-zinc-900 px-7 py-3 text-sm font-semibold tracking-wide text-white transition hover:bg-zinc-800"
+                className="w-full sm:w-auto rounded-full bg-zinc-900 px-8 py-3.5 text-sm font-semibold tracking-wide text-white transition hover:bg-zinc-800"
               >
                 {s.ctaPrimary.label}
               </Link>
               {s.ctaSecondary ? (
                 <Link
                   to={s.ctaSecondary.to}
-                  className="w-full sm:w-auto rounded-full bg-white/75 px-7 py-3 text-sm font-semibold tracking-wide text-zinc-900 ring-1 ring-black/10 backdrop-blur transition hover:bg-white"
+                  className="w-full sm:w-auto rounded-full bg-white/75 px-8 py-3.5 text-sm font-semibold tracking-wide text-zinc-900 ring-1 ring-black/10 backdrop-blur transition hover:bg-white"
                 >
                   {s.ctaSecondary.label}
                 </Link>
@@ -95,7 +130,7 @@ function Hero({ s }: { s: HeroSection }) {
           </div>
         </div>
 
-        <div className="pb-4 text-center">
+        <div className="pt-10 pb-2 text-center">
           <a
             href={`#${s.id}-next`}
             className="inline-flex items-center justify-center text-xs font-medium tracking-[0.2em] text-zinc-700 hover:text-zinc-900"
