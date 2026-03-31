@@ -40,32 +40,38 @@ class PostUpsertBody(BaseModel):
 
 @router.get("")
 async def list_published(request: Request):
-    # Solo “publicadas”: mantenemos el filtro en backend (aunque RLS puede también restringir).
-    payload = await rest_select(
-        "posts",
-        access_token=None,
-        params={
-            "select": "id,title,slug,excerpt,cover_image_url,published_at,updated_at",
-            "order": "updated_at.desc",
-            "published_at": "not.is.null",
-        },
-    )
-    return payload
+    try:
+        # Solo “publicadas”: mantenemos el filtro en backend (aunque RLS puede también restringir).
+        payload = await rest_select(
+            "posts",
+            access_token=None,
+            params={
+                "select": "id,title,slug,excerpt,cover_image_url,published_at,updated_at",
+                "order": "updated_at.desc",
+                "published_at": "not.is.null",
+            },
+        )
+        return payload
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Error consultando Supabase (/posts): {e}")
 
 
 @router.get("/{post_id}")
 async def get_post(post_id: str, request: Request):
     token = _get_bearer_token(request)
 
-    payload = await rest_select(
-        "posts",
-        access_token=token,
-        params={
-            "select": "id,title,slug,excerpt,cover_image_url,published_at,created_at,updated_at,content_json,content_html",
-            "id": f"eq.{post_id}",
-            "limit": 1,
-        },
-    )
+    try:
+        payload = await rest_select(
+            "posts",
+            access_token=token,
+            params={
+                "select": "id,title,slug,excerpt,cover_image_url,published_at,created_at,updated_at,content_json,content_html",
+                "id": f"eq.{post_id}",
+                "limit": 1,
+            },
+        )
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Error consultando Supabase (/posts/{post_id}): {e}")
 
     if not payload:
         raise HTTPException(status_code=404, detail="Post no encontrado")
